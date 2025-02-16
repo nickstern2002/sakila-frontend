@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // ✅ Import Link from React Router
 import "./LandingPage.css";
 
 const LandingPage = () => {
   const [films, setFilms] = useState([]);
   const [actors, setActors] = useState([]);
   const [selectedFilm, setSelectedFilm] = useState(null);
-  const [selectedActor, setSelectedActor] = useState(null); // New state for selected actor
+  const [selectedActor, setSelectedActor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,7 +25,6 @@ const LandingPage = () => {
       });
   }, []);
 
-  // Fetch film details
   const fetchFilmDetails = (filmId) => {
     fetch(`http://127.0.0.1:5000/film/${filmId}`)
       .then((response) => response.json())
@@ -34,7 +34,6 @@ const LandingPage = () => {
       .catch((error) => console.error("Error fetching film details:", error));
   };
 
-  // Fetch actor details
   const fetchActorDetails = (actorId) => {
     fetch(`http://127.0.0.1:5000/actor/${actorId}`)
       .then((response) => response.json())
@@ -49,6 +48,7 @@ const LandingPage = () => {
 
   return (
     <div className="landing-container">
+      <h1>Welcome to the Movie Rental Store</h1>
       <h2>Top Rented Films</h2>
       <div className="grid-container">
         {films.map((film) => (
@@ -80,7 +80,7 @@ const LandingPage = () => {
           <div
             key={actor.actor_id}
             className="card"
-            onClick={() => fetchActorDetails(actor.actor_id)} // Clickable actor card
+            onClick={() => fetchActorDetails(actor.actor_id)}
           >
             <p className="title">
               {actor.first_name} {actor.last_name}
@@ -105,6 +105,11 @@ const LandingPage = () => {
           <button onClick={() => setSelectedActor(null)}>Close</button>
         </div>
       )}
+
+      {/* Button to go to Films Page */}
+      <Link to="/films">
+        <button className="films-page-button">Go to Films Page</button>
+      </Link>
     </div>
   );
 };

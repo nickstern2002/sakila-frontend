@@ -48,6 +48,23 @@ const LandingPage = () => {
 
   return (
     <div className="landing-container">
+      {/* Header containing separate sections */}
+      <div className="header">
+        <div className="left-header">
+          <Link to="/films">
+            <button className="films-page-button">Go to Films Page</button>
+          </Link>
+        </div>
+        <div className="right-header">
+          <Link to="/admin-login">
+            <button className="login-button admin">Admin Login</button>
+          </Link>
+          <Link to="/user-login">
+            <button className="login-button user">User Login</button>
+          </Link>
+        </div>
+      </div>
+
       <h1>Welcome to the Movie Rental Store</h1>
       <h2>Top Rented Films</h2>
       <div className="grid-container">
@@ -119,20 +136,13 @@ const LandingPage = () => {
             {selectedActor.top_rented_films.map((film) => (
               <li key={film.film_id}>
                 <span className="film-title">{film.title}</span> -{" "}
-                <span className="rental-count">
-                  {film.rental_count} Rentals
-                </span>
+                <span className="rental-count">{film.rental_count} Rentals</span>
               </li>
             ))}
           </ul>
           <button onClick={() => setSelectedActor(null)}>Close</button>
         </div>
       )}
-
-      {/* Button to go to Films Page */}
-      <Link to="/films">
-        <button className="films-page-button">Go to Films Page</button>
-      </Link>
     </div>
   );
 };

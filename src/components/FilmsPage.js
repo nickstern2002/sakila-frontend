@@ -5,22 +5,35 @@ const FilmsPage = () => {
     const [filmQuery, setFilmQuery] = useState("");
     const [actorQuery, setActorQuery] = useState("");
     const [genreQuery, setGenreQuery] = useState("");
-    const [searchResults, setSearchResults] = useState([]); // Store backend results
+    const [searchResults, setSearchResults] = useState([]);
+    const [selectedFilm, setSelectedFilm] = useState(null);
 
-    // Function to handle search button click
+    // Handle search button click
     const handleSearch = () => {
         console.log("Searching for:", { filmQuery, actorQuery, genreQuery });
-
-        // Backend API URL (to be created in Flask)
         const searchURL = `http://127.0.0.1:5000/films?film=${filmQuery}&actor=${actorQuery}&genre=${genreQuery}`;
 
         fetch(searchURL)
             .then((response) => response.json())
             .then((data) => {
-                setSearchResults(data); // Store results
+                setSearchResults(data);
+                // Clear any previously selected film
+                setSelectedFilm(null);
             })
             .catch((error) => {
                 console.error("Error fetching search results:", error);
+            });
+    };
+
+    // Handle when a film result is clicked
+    const handleFilmClick = (filmId) => {
+        fetch(`http://127.0.0.1:5000/film/${filmId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setSelectedFilm(data);
+            })
+            .catch((error) => {
+                console.error("Error fetching film details:", error);
             });
     };
 
@@ -54,15 +67,43 @@ const FilmsPage = () => {
                     placeholder="Enter genre..."
                 />
 
-                {/* Search Button */}
-                <button onClick={handleSearch} className="search-button">Search</button>
+                <button onClick={handleSearch} className="search-button">
+                    Search
+                </button>
             </div>
 
             {/* Results Box */}
             <div className="results-box">
                 {searchResults.length > 0 ? (
-                    searchResults.map((film, index) => (
-                        <p key={index}>{film.title} - {film.genre} ({film.release_year})</p>
+                    searchResults.map((film) => (
+                        <React.Fragment key={film.film_id}>
+                            <div
+                                className="result-item"
+                                onClick={() => handleFilmClick(film.film_id)}
+                            >
+                                <p>
+                                    {film.title} - {film.genre} ({film.release_year})
+                                </p>
+                            </div>
+                            {selectedFilm && selectedFilm.film_id === film.film_id && (
+                                <div className="film-details-inline">
+                                    <h2>{selectedFilm.title}</h2>
+                                    <p>
+                                        <strong>Description:</strong> {selectedFilm.description}
+                                    </p>
+                                    <p>
+                                        <strong>Release Year:</strong> {selectedFilm.release_year}
+                                    </p>
+                                    <p>
+                                        <strong>Language:</strong> {selectedFilm.language}
+                                    </p>
+                                    <p>
+                                        <strong>Rating:</strong> {selectedFilm.rating}
+                                    </p>
+                                    <button onClick={() => setSelectedFilm(null)}>Close</button>
+                                </div>
+                            )}
+                        </React.Fragment>
                     ))
                 ) : (
                     <p>Search results will appear here...</p>

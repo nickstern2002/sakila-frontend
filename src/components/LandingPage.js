@@ -98,7 +98,7 @@ const LandingPage = () => {
           <ul>
             {selectedActor.top_rented_films.map((film) => (
               <li key={film.film_id}>
-                {film.title} - {film.rental_count} rentals
+                <span className="film-title">{film.title}</span> - <span className="rental-count">{film.rental_count} Rentals</span>
               </li>
             ))}
           </ul>

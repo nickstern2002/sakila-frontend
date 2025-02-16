@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // ✅ Import Link from React Router
+import { Link } from "react-router-dom"; // Import Link from React Router
 import "./LandingPage.css";
 
 const LandingPage = () => {
@@ -66,10 +66,26 @@ const LandingPage = () => {
       {selectedFilm && (
         <div className="film-details">
           <h2>{selectedFilm.title}</h2>
-          <p><strong>Description:</strong> {selectedFilm.description}</p>
-          <p><strong>Release Year:</strong> {selectedFilm.release_year}</p>
-          <p><strong>Language:</strong> {selectedFilm.language}</p>
-          <p><strong>Rating:</strong> {selectedFilm.rating}</p>
+          <p>
+            <strong>Description:</strong> {selectedFilm.description}
+          </p>
+          <p>
+            <strong>Release Year:</strong> {selectedFilm.release_year}
+          </p>
+          <p>
+            <strong>Language:</strong> {selectedFilm.language}
+          </p>
+          <p>
+            <strong>Rating:</strong> {selectedFilm.rating}
+          </p>
+          {selectedFilm.actors && selectedFilm.actors.length > 0 && (
+            <p>
+              <strong>Actors:</strong>{" "}
+              {selectedFilm.actors
+                .map((actor) => `${actor.first_name} ${actor.last_name}`)
+                .join(", ")}
+            </p>
+          )}
           <button onClick={() => setSelectedFilm(null)}>Close</button>
         </div>
       )}
@@ -92,13 +108,20 @@ const LandingPage = () => {
 
       {selectedActor && (
         <div className="actor-details">
-          <h2>{selectedActor.first_name} {selectedActor.last_name}</h2>
-          <p><strong>Films:</strong> {selectedActor.film_count}</p>
+          <h2>
+            {selectedActor.first_name} {selectedActor.last_name}
+          </h2>
+          <p>
+            <strong>Films:</strong> {selectedActor.film_count}
+          </p>
           <h3>Top 5 Rented Films</h3>
           <ul>
             {selectedActor.top_rented_films.map((film) => (
               <li key={film.film_id}>
-                <span className="film-title">{film.title}</span> - <span className="rental-count">{film.rental_count} Rentals</span>
+                <span className="film-title">{film.title}</span> -{" "}
+                <span className="rental-count">
+                  {film.rental_count} Rentals
+                </span>
               </li>
             ))}
           </ul>

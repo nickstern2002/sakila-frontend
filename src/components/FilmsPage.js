@@ -100,6 +100,17 @@ const FilmsPage = () => {
                                     <p>
                                         <strong>Rating:</strong> {selectedFilm.rating}
                                     </p>
+                                    {selectedFilm.actors && selectedFilm.actors.length > 0 && (
+                                        <p>
+                                            <strong>Actors:</strong>{" "}
+                                            {selectedFilm.actors
+                                                .map(
+                                                    (actor) =>
+                                                        `${actor.first_name} ${actor.last_name}`
+                                                )
+                                                .join(", ")}
+                                        </p>
+                                    )}
                                     <button onClick={() => setSelectedFilm(null)}>Close</button>
                                 </div>
                             )}

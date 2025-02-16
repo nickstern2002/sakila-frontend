@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./LandingPage.css"; // Import the CSS file
 
 const LandingPage = () => {
   const [films, setFilms] = useState([]);
@@ -25,24 +26,28 @@ const LandingPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <h2>Top 5 Rented Films</h2>
-      <ul>
+    <div className="landing-container">
+      <h2>Top Rented Films</h2>
+      <div className="grid-container">
         {films.map((film) => (
-          <li key={film.film_id}>
-            {film.title} - {film.rental_count} rentals
-          </li>
+          <div key={film.film_id} className="card">
+            <p className="title">{film.title}</p>
+            <p>{film.rental_count} rentals</p>
+          </div>
         ))}
-      </ul>
+      </div>
 
       <h2>Top 5 Actors</h2>
-      <ul>
+      <div className="grid-container">
         {actors.map((actor) => (
-          <li key={actor.actor_id}>
-            {actor.first_name} {actor.last_name} - {actor.film_count} films
-          </li>
+          <div key={actor.actor_id} className="card">
+            <p className="title">
+              {actor.first_name} {actor.last_name}
+            </p>
+            <p>{actor.film_count} films</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // Import Link for navigation
 import "./FilmsPage.css";
 
 const FilmsPage = () => {
@@ -39,6 +40,13 @@ const FilmsPage = () => {
 
     return (
         <div className="films-container">
+            {/* Header with "Go to Home Page" button in the top right */}
+            <div className="header">
+                <Link to="/">
+                    <button className="home-page-button">Go to Home Page</button>
+                </Link>
+            </div>
+
             <h1>Films Page</h1>
 
             {/* Search Inputs */}
@@ -111,7 +119,9 @@ const FilmsPage = () => {
                                                 .join(", ")}
                                         </p>
                                     )}
-                                    <button onClick={() => setSelectedFilm(null)}>Close</button>
+                                    <button onClick={() => setSelectedFilm(null)}>
+                                        Close
+                                    </button>
                                 </div>
                             )}
                         </React.Fragment>

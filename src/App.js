@@ -5,6 +5,7 @@ import LandingPage from "./components/LandingPage";
 import FilmsPage from "./components/FilmsPage";
 import AdminLogin from "./components/AdminLogin";
 import UserLogin from "./components/UserLogin";
+import AdminDashboard from "./components/AdminDashboard";
 
 function App() {
   return (
@@ -12,10 +13,11 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Routes>
-            <Route path="/" element={<LandingPage />} /> {/* Landing Page Route */}
-            <Route path="/films" element={<FilmsPage />} /> {/* Films Page Route */}
+            <Route path="/" element={<LandingPage />} /> { }
+            <Route path="/films" element={<FilmsPage />} /> { }
             <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/user-login" element={<UserLogin />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} /> { }
           </Routes>
         </header>
       </div>

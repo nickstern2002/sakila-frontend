@@ -48,19 +48,14 @@ const LandingPage = () => {
 
   return (
     <div className="landing-container">
-      {/* Header containing separate sections */}
+      {/* Header containing navigation buttons */}
       <div className="header">
         <div className="left-header">
           <Link to="/films">
             <button className="films-page-button">Go to Films Page</button>
           </Link>
-        </div>
-        <div className="right-header">
-          <Link to="/admin-login">
-            <button className="login-button admin">Admin Login</button>
-          </Link>
-          <Link to="/user-login">
-            <button className="login-button user">User Login</button>
+          <Link to="/customers">
+            <button className="customers-page-button">Go to Customers Page</button>
           </Link>
         </div>
       </div>

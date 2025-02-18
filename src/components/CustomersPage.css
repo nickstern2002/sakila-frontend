@@ -1,0 +1,181 @@
+.customers-container {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    padding-top: 80px;
+}
+
+/* Header: positions the home button at the top right */
+.header {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+/* Home Page Button styling */
+.home-page-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow:
+        -1px -1px 0 rgba(0, 0, 0, 0.4),
+        1px -1px 0 rgba(0, 0, 0, 0.4),
+        -1px 1px 0 rgba(0, 0, 0, 0.4),
+        1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.home-page-button:hover {
+    background-color: #218838;
+}
+
+/* Search Box Styling */
+.search-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Search Button Styling */
+.search-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+/* Customer List */
+.results-box {
+    border: 1px solid #ccc;
+    min-height: 100px;
+    width: 100%;
+    padding: 10px;
+    margin: 20px auto 0;
+    text-align: left;
+    background-color: #1b0163;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    color: #cacaca;
+    text-shadow:
+        -2px -2px 0 rgba(0, 0, 0, 0.1),
+        2px -2px 0 rgba(0, 0, 0, 0.1),
+        -2px 2px 0 rgba(0, 0, 0, 0.1),
+        2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.result-item {
+    cursor: pointer;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+/* Pagination Controls */
+.pagination {
+    margin-top: 15px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+
+/* Add Customer Button */
+.add-customer-button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.add-customer-button:hover {
+    background-color: #218838;
+}
+
+/* Add Customer Popup */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1b0163;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: #cacaca;
+    text-shadow:
+        -2px -2px 0 rgba(0, 0, 0, 0.1),
+        2px -2px 0 rgba(0, 0, 0, 0.1),
+        -2px 2px 0 rgba(0, 0, 0, 0.1),
+        2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.popup input {
+    display: block;
+    margin: 10px auto;
+    padding: 8px;
+    width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.popup button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.popup button:first-of-type {
+    background-color: #007bff;
+    color: white;
+}
+
+.popup button:first-of-type:hover {
+    background-color: #0056b3;
+}
+
+.popup button:last-of-type {
+    background-color: #dc3545;
+    color: white;
+}
+
+.popup button:last-of-type:hover {
+    background-color: #c82333;
+}

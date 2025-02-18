@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import LandingPage from "./components/LandingPage";
 import FilmsPage from "./components/FilmsPage";
-import AdminLogin from "./components/AdminLogin";
-import UserLogin from "./components/UserLogin";
-import AdminDashboard from "./components/AdminDashboard";
+import CustomersPage from "./components/CustomersPage"; // Import new CustomersPage
 
 function App() {
   return (
@@ -13,11 +11,9 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Routes>
-            <Route path="/" element={<LandingPage />} /> { }
-            <Route path="/films" element={<FilmsPage />} /> { }
-            <Route path="/admin-login" element={<AdminLogin />} />
-            <Route path="/user-login" element={<UserLogin />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} /> { }
+            <Route path="/" element={<LandingPage />} /> {/* Landing Page */}
+            <Route path="/films" element={<FilmsPage />} /> {/* Films Page */}
+            <Route path="/customers" element={<CustomersPage />} /> {/* Customers Page */}
           </Routes>
         </header>
       </div>

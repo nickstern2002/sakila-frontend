@@ -8,6 +8,8 @@ const CustomersPage = () => {
     const [hasNext, setHasNext] = useState(false);
     const [searchQuery, setSearchQuery] = useState({ customerId: "", firstName: "", lastName: "" });
     const [isAdding, setIsAdding] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [deleteCustomerId, setDeleteCustomerId] = useState("");
     const [newCustomer, setNewCustomer] = useState({
         firstName: "",
         lastName: "",
@@ -96,6 +98,29 @@ const CustomersPage = () => {
             .catch((error) => console.error("Error adding customer:", error));
     };
 
+    const handleDeleteCustomer = () => {
+        if (!deleteCustomerId) {
+            alert("Please enter a Customer ID to delete.");
+            return;
+        }
+
+        fetch(`http://127.0.0.1:5000/api/customers/${deleteCustomerId}`, {
+            method: "DELETE",
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                    alert(`Error: ${data.error}`);
+                } else {
+                    alert("Customer deleted successfully!");
+                    setIsDeleting(false);
+                    setDeleteCustomerId("");
+                    fetchCustomers();
+                }
+            })
+            .catch((error) => console.error("Error deleting customer:", error));
+    };
+
     return (
         <div className="customers-container">
             <div className="header">
@@ -138,6 +163,8 @@ const CustomersPage = () => {
 
             <button onClick={() => setIsAdding(true)} className="add-customer-button">Add New Customer</button>
 
+            <button onClick={() => setIsDeleting(true)} className="delete-customer-button">Delete Customer</button>
+
             {isAdding && (
                 <div className="popup">
                     <h2>Add New Customer</h2>
@@ -160,6 +187,15 @@ const CustomersPage = () => {
                     <input type="text" placeholder="Phone" value={newCustomer.phone} onChange={(e) => handleInputChange(e, "phone", "new")} />
                     <button onClick={handleAddCustomer}>Add Customer</button>
                     <button onClick={() => setIsAdding(false)}>Cancel</button>
+                </div>
+            )}
+
+            {isDeleting && (
+                <div className="popup">
+                    <h2>Delete Customer</h2>
+                    <input type="text" placeholder="Enter Customer ID" value={deleteCustomerId} onChange={(e) => setDeleteCustomerId(e.target.value)} />
+                    <button onClick={handleDeleteCustomer}>Delete</button>
+                    <button onClick={() => setIsDeleting(false)}>Cancel</button>
                 </div>
             )}
         </div>

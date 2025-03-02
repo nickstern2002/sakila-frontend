@@ -8,6 +8,9 @@ const FilmsPage = () => {
     const [genreQuery, setGenreQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [selectedFilm, setSelectedFilm] = useState(null);
+    const [isRenting, setIsRenting] = useState(false);
+    const [rentalCustomerId, setRentalCustomerId] = useState("");
+    const [rentalFilmId, setRentalFilmId] = useState(null);
 
     // Handle search button click
     const handleSearch = () => {
@@ -36,6 +39,30 @@ const FilmsPage = () => {
             .catch((error) => {
                 console.error("Error fetching film details:", error);
             });
+    };
+
+    const handleRentFilm = (filmId) => {
+        setRentalFilmId(filmId);
+        setIsRenting(true);
+    };
+
+    const submitRental = () => {
+        fetch("http://127.0.0.1:5000/rentals/rent", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ customer_id: rentalCustomerId, film_id: rentalFilmId })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
+                    alert(`Error: ${data.error}`);
+                } else {
+                    alert("Rental successfully recorded!");
+                    setIsRenting(false);
+                    setRentalCustomerId("");
+                }
+            })
+            .catch((error) => console.error("Error renting film:", error));
     };
 
     return (
@@ -80,48 +107,25 @@ const FilmsPage = () => {
                 </button>
             </div>
 
-            {/* Results Box */}
             <div className="results-box">
                 {searchResults.length > 0 ? (
                     searchResults.map((film) => (
                         <React.Fragment key={film.film_id}>
-                            <div
-                                className="result-item"
-                                onClick={() => handleFilmClick(film.film_id)}
-                            >
-                                <p>
-                                    {film.title} - {film.genre} ({film.release_year})
-                                </p>
+                            <div className="result-item" onClick={() => handleFilmClick(film.film_id)}>
+                                <p>{film.title} - {film.genre} ({film.release_year})</p>
                             </div>
                             {selectedFilm && selectedFilm.film_id === film.film_id && (
                                 <div className="film-details-inline">
                                     <h2>{selectedFilm.title}</h2>
-                                    <p>
-                                        <strong>Description:</strong> {selectedFilm.description}
-                                    </p>
-                                    <p>
-                                        <strong>Release Year:</strong> {selectedFilm.release_year}
-                                    </p>
-                                    <p>
-                                        <strong>Language:</strong> {selectedFilm.language}
-                                    </p>
-                                    <p>
-                                        <strong>Rating:</strong> {selectedFilm.rating}
-                                    </p>
+                                    <p><strong>Description:</strong> {selectedFilm.description}</p>
+                                    <p><strong>Release Year:</strong> {selectedFilm.release_year}</p>
+                                    <p><strong>Language:</strong> {selectedFilm.language}</p>
+                                    <p><strong>Rating:</strong> {selectedFilm.rating}</p>
                                     {selectedFilm.actors && selectedFilm.actors.length > 0 && (
-                                        <p>
-                                            <strong>Actors:</strong>{" "}
-                                            {selectedFilm.actors
-                                                .map(
-                                                    (actor) =>
-                                                        `${actor.first_name} ${actor.last_name}`
-                                                )
-                                                .join(", ")}
-                                        </p>
+                                        <p><strong>Actors:</strong> {selectedFilm.actors.map((actor) => `${actor.first_name} ${actor.last_name}`).join(", ")}</p>
                                     )}
-                                    <button onClick={() => setSelectedFilm(null)}>
-                                        Close
-                                    </button>
+                                    <button onClick={() => handleRentFilm(selectedFilm.film_id)}>Rent Now</button>
+                                    <button onClick={() => setSelectedFilm(null)}>Close</button>
                                 </div>
                             )}
                         </React.Fragment>
@@ -130,6 +134,16 @@ const FilmsPage = () => {
                     <p>Search results will appear here...</p>
                 )}
             </div>
+
+            {isRenting && (
+                <div className="popup">
+                    <h2>Rent Film</h2>
+                    <input type="text" placeholder="Enter Customer ID" value={rentalCustomerId} onChange={(e) => setRentalCustomerId(e.target.value)} />
+                    <button onClick={submitRental}>Confirm Rental</button>
+                    <button onClick={() => setIsRenting(false)}>Cancel</button>
+                </div>
+            )}
+
         </div>
     );
 };

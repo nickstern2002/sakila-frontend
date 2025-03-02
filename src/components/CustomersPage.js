@@ -175,6 +175,22 @@ const CustomersPage = () => {
             .catch((error) => console.error("Error updating customer:", error));
     };
 
+    const handleReturnRental = (rentalId) => {
+        fetch(`http://127.0.0.1:5000/api/customers/return_rental/${rentalId}`, {
+            method: "PUT",
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                    alert(`Error: ${data.error}`);
+                } else {
+                    alert("Rental returned successfully!");
+                    fetchCustomerDetails(expandedCustomer);
+                }
+            })
+            .catch((error) => console.error("Error returning rental:", error));
+    };
+
     return (
         <div className="customers-container">
             <div className="header">
@@ -211,13 +227,15 @@ const CustomersPage = () => {
                                     <ul>
                                         {customerDetails[customer.customer_id].rental_history.length > 0 ? (
                                             customerDetails[customer.customer_id].rental_history.map((rental, index) => (
-                                                <li key={index}>{rental.title} - Rented on {rental.rental_date}, Returned on {rental.return_date || "Not Returned"}</li>
+                                                <li key={index}>
+                                                    {rental.title} - Rented on {rental.rental_date}, Returned on {rental.return_date || "Not Returned"}
+                                                    {!rental.return_date && <button onClick={() => handleReturnRental(rental.rental_id)}>Return</button>}
+                                                </li>
                                             ))
                                         ) : (
                                             <p>No rentals found.</p>
                                         )}
                                     </ul>
-                                    <button onClick={() => handleEditCustomer(customer.customer_id)}>Edit Customer</button>
                                 </div>
                             )}
                         </div>
